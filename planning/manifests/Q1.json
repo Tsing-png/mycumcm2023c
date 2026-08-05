@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "question_id": "Q1",
+  "rigor_profile": "lean",
+  "current_gate": "G1",
+  "status": "problem_framed",
+  "artifacts": {
+    "problem_parse": "planning/parse/problem_parse.json",
+    "method_card": null,
+    "decision_ledger": null,
+    "risk_probe": null,
+    "latest_run": null
+  },
+  "allowed": {
+    "code_generation": false,
+    "freeze": false,
+    "paper_writing": false,
+    "final_assembly": false
+  },
+  "blockers": ["classification pending", "human framing decisions pending (4 items in problem_parse.json)"],
+  "next_action": {
+    "owner": "ai",
+    "skill": "problem-classifier",
+    "reason": "G1 parse complete; need classification before method screening"
+  },
+  "updated_at": "2026-08-05T00:00:00Z"
+}
