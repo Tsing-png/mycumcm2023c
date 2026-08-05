@@ -3,7 +3,7 @@
   "question_id": "Q4",
   "rigor_profile": "lean",
   "current_gate": "G1",
-  "status": "data_audited",
+  "status": "deferred",
   "artifacts": {
     "problem_parse": "planning/parse/problem_parse.json",
     "problem_classification": "planning/classification/problem_classification.json",
@@ -14,17 +14,12 @@
     "risk_probe": null,
     "latest_run": null
   },
-  "allowed": {
-    "code_generation": false,
-    "freeze": false,
-    "paper_writing": false,
-    "final_assembly": false
-  },
-  "blockers": ["Q4 qualitative — method screening less applicable; defer until Q1-Q3 complete"],
+  "allowed": {"code_generation": false, "freeze": false, "paper_writing": false, "final_assembly": false},
+  "blockers": ["Q4 is qualitative — depends on concrete data limitation experience from Q1-Q3 experiments"],
   "next_action": {
     "owner": "ai",
-    "skill": "method-selector",
-    "reason": "G1 complete for all Q; Q4 can be planned alongside Q1-Q3"
+    "skill": "deferred",
+    "reason": "Q4 requires actual modeling experience from Q1-Q3. Will synthesize: (a) data gaps encountered during Q1-Q3 implementation, (b) paper recommendations (weather, holidays, competition, inventory, origin data), (c) our own gap analysis. Run after Q1-Q3 code produces results."
   },
   "updated_at": "2026-08-05T00:00:00Z"
 }
