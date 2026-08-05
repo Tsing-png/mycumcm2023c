@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "question_id": "Q3",
+  "probe_date": "2026-08-05",
+  "methods_probed": ["M1_Filter_Newsvendor", "M2_FixedMarkup"],
+  "executability": {
+    "M1": {"status": "PASS", "time_s": 0.5, "note": "Filter ≥2.5kg → 31 products naturally in [27,33]. Per-product newsvendor grid search executed."},
+    "M2": {"status": "PASS", "time_s": 0.01, "note": "Same 31 products, fixed markup, Q=demand/(1-L)"}
+  },
+  "data_coverage": {
+    "eligible_products_June24_30": 49,
+    "qualifying_after_filter": 31,
+    "excluded_low_volume": 18,
+    "filter_threshold": "avg_daily_sales ≥ 2.5kg",
+    "note": "Threshold robust: 2.3-3.0kg all yield 30-31 products within [27,33]"
+  },
+  "assumption_checks": {
+    "selection_trivial": "31 qualifying products ∈ [27,33] — no combinatorial selection needed. Take all.",
+    "newsvendor_feasibility": "Per-product newsvendor converges. Markup ∈ [60%, 220%] across products — diverse and reasonable.",
+    "demand_estimation": "Uses last-30-day per-product demand distribution. Products without 30-day history fall back to week stats."
+  },
+  "output_degeneracy": {
+    "M1_markup": {"std": 0.316, "range": [0.60, 2.20], "degenerate": false},
+    "M1_quantity": {"cv": 0.667, "range_kg": [2.5, 43.9], "degenerate": false},
+    "M1_categories": "6/6 represented",
+    "M1_profit_per_category": {"水生根茎类": 79, "花叶类": 322, "花菜类": 131, "茄类": 146, "辣椒类": 342, "食用菌": 161}
+  },
+  "perturbation_sensitivity": {
+    "k_sensitivity": "Profit varies -37% (k=0.3) to +30% (k=0.9) vs baseline k=0.66. Similar magnitude to Q2 — model is sensitive to k.",
+    "threshold_sensitivity": "Threshold 2.0kg→39 products(out of range), 2.3-3.0kg→30-31 products(in range). Robust.",
+    "N_range": "31 is midpoint of [27,33]. Parameter robust."
+  },
+  "demand_satisfaction": {
+    "水生根茎类": "101.5% ✓",
+    "花叶类": "114.5% ✓",
+    "花菜类": "174.9% ✓",
+    "茄类": "206.7% ✓",
+    "辣椒类": "170.2% ✓",
+    "食用菌": "174.4% ✓",
+    "min": "101.5%",
+    "fallback_triggered": false
+  },
+  "scale_check": {"total_time_s": 0.5, "within_budget_5min": true},
+  "verdict": {
+    "M1_Filter_Newsvendor": "PASS — All checks pass. 31 products naturally in range. Demand satisfaction ≥100% all categories. Markup and quantity diverse. No degeneracy.",
+    "M2_FixedMarkup": "PASS — Valid baseline. M1 shows +160% profit gain via joint markup-quantity optimization."
+  }
+}

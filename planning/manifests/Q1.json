@@ -2,30 +2,20 @@
   "schema_version": 1,
   "question_id": "Q1",
   "rigor_profile": "lean",
-  "current_gate": "G1",
-  "status": "data_audited",
+  "current_gate": "G2.5",
+  "status": "method_chosen_by_human",
   "artifacts": {
     "problem_parse": "planning/parse/problem_parse.json",
     "problem_classification": "planning/classification/problem_classification.json",
     "data_profile": "workspace/data/data_profile.json",
-    "data_report": "workspace/data/data_report.md",
     "literature_analysis": "workspace/papers/related_paper_analysis.md",
-    "method_card": null,
-    "decision_ledger": null,
-    "risk_probe": null,
+    "method_card": "methods/Q1/q1_method_card.md",
+    "decision_ledger": "planning/framing_decisions.jsonl",
+    "risk_probe": "methods/Q1/probes/risk_probe_summary.json",
     "latest_run": null
   },
-  "allowed": {
-    "code_generation": false,
-    "freeze": false,
-    "paper_writing": false,
-    "final_assembly": false
-  },
-  "blockers": ["method screening pending"],
-  "next_action": {
-    "owner": "ai",
-    "skill": "method-selector",
-    "reason": "G1 complete (parse + classify + data audit + literature); ready for method screening"
-  },
+  "allowed": {"code_generation": true, "freeze": false, "paper_writing": false, "final_assembly": false},
+  "blockers": [],
+  "next_action": {"owner": "ai", "skill": "model-code-analyzer", "reason": "G2.5 passed. M1=Spearman+KMeans++, M2=Pearson+Hierarchical(diagnostic). Ready for code plan."},
   "updated_at": "2026-08-05T00:00:00Z"
 }
