@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "question_id": "Q1",
+  "probe_date": "2026-08-05",
+  "methods_probed": ["M1_Spearman_KMeans", "M2_Pearson_Hierarchical"],
+  "executability": {
+    "M1": {"status": "PASS", "time_s": 0.11, "note": "Spearman correlation + KMeans++ executed on 159 products (≥30 sales days), 6 categories"},
+    "M2": {"status": "PASS", "time_s": 0.005, "note": "Pearson correlation + Ward hierarchical clustering executed"}
+  },
+  "data_coverage": {
+    "category_daily_pivot": {"rows": 1049, "categories": 6, "completeness": "100%"},
+    "products_for_clustering": {"dense_products": 159, "total": 246, "threshold": "≥30 sales days"},
+    "missingness": "none in aggregated view"
+  },
+  "assumption_checks": {
+    "M1_normality": {"required": false, "note": "Spearman is non-parametric — no normality assumption"},
+    "M1_cluster_separation": {"silhouette_range": [0.335, 0.463], "best_k": 2, "verdict": "acceptable separation"},
+    "M2_normality": {"required": true, "result": "ALL 6 categories fail normality test (p<0.000001)", "verdict": "FAIL — Pearson assumption violated"},
+    "distribution_fitting": {
+      "花叶类": "lognormal KS p=0.544",
+      "花菜类": "lognormal KS p=0.879",
+      "茄类": "lognormal KS p=0.991",
+      "辣椒类": "lognormal KS p=0.431",
+      "食用菌": "lognormal KS p=0.294",
+      "水生根茎类": "lognormal KS p=0.008 (poor fit)"
+    }
+  },
+  "output_degeneracy": {
+    "M1_correlation": {"range": [-0.194, 0.625], "mean_abs": 0.395, "variance": 0.0566, "all_zero": false, "all_one": false},
+    "M1_clustering": {"all_one_cluster": false, "cluster_sizes": {"0": 72, "1": 87}, "category_mixing": "both clusters contain multiple categories"},
+    "M2_correlation": {"range": [0.106, 0.686], "all_zero": false, "degenerate": false}
+  },
+  "perturbation_sensitivity": {
+    "M1_bootstrap": {"n_iterations": 100, "mean_corr_std": 0.0255, "max_corr_std": 0.0314, "stable": true},
+    "M1_vs_M2_agreement": {"max_diff": 0.299, "mean_diff": 0.128, "directional_agreement": "86.67%"}
+  },
+  "scale_check": {
+    "M1_runtime_s": 0.21,
+    "M2_runtime_s": 0.005,
+    "within_budget_5min": true
+  },
+  "verdict": {
+    "M1_Spearman_KMeans": "PASS",
+    "M2_Pearson_Hierarchical": "CONDITIONAL — Pearson correlation invalid: all 6 categories fail normality test (p<0.000001). Spearman (M1) is the appropriate choice for non-normal data."
+  }
+}
