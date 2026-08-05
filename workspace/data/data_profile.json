@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "raw_files": [
+    {"file": "附件1.xlsx", "rows": 251, "sheets": ["Sheet1"], "hash_note": "商品信息表"},
+    {"file": "附件2.xlsx", "rows": 878503, "sheets": ["Sheet1"], "hash_note": "销售流水明细 2020-07-01~2023-06-30"},
+    {"file": "附件3.xlsx", "rows": 55982, "sheets": ["Sheet1"], "hash_note": "批发价格 2020-07-01~2023-06-30"},
+    {"file": "附件4.xlsx", "rows": "251+6", "sheets": ["Sheet1(visible)", "平均损耗率(%)_小分类编码_不同值(hidden)"], "hash_note": "损耗率，隐藏sheet不可用"}
+  ],
+  "attachment_mapping": [
+    {"attachment": "附件1", "maps_to": ["Q1","Q2","Q3"], "role": "单品→品类映射，全问题共用"},
+    {"attachment": "附件2", "maps_to": ["Q1","Q2","Q3"], "role": "核心数据：销量、售价、打折标记、时间"},
+    {"attachment": "附件3", "maps_to": ["Q2","Q3"], "role": "批发价→成本基准"},
+    {"attachment": "附件4(Sheet1 only)", "maps_to": ["Q2","Q3"], "role": "单品损耗率→成本修正"}
+  ],
+  "fields": [
+    {"name": "单品编码", "type": "int64", "role": "primary_key", "coverage": "附件1/2/3/4 全覆盖"},
+    {"name": "单品名称", "type": "object", "role": "label", "notes": "含数字编号表示供应来源"},
+    {"name": "分类编码/分类名称", "type": "int64/object", "role": "category", "notes": "6个品类，高度不均衡"},
+    {"name": "销售日期", "type": "datetime64[ns]", "role": "time_index", "coverage": "1085/1095天有交易"},
+    {"name": "销量(千克)", "type": "float64", "role": "target/quantity", "range": "-9.08~160", "notes": "负值为退货"},
+    {"name": "销售单价(元/千克)", "type": "float64", "role": "price", "range": "0.1~119.9"},
+    {"name": "销售类型", "type": "object", "role": "filter", "values": "销售(878042), 退货(461)"},
+    {"name": "是否打折销售", "type": "object", "role": "flag", "values": "否(831137), 是(47366, 5.4%)"},
+    {"name": "批发价格(元/千克)", "type": "float64", "role": "cost", "range": "0.01~141.0"},
+    {"name": "损耗率(%)", "type": "float64", "role": "loss_coefficient", "range": "0.0~29.25"}
+  ],
+  "quality": {
+    "missingness": {
+      "附件1": "0 missing",
+      "附件2": "0 missing",
+      "附件3": "0 missing",
+      "附件4_Sheet1": "0 missing"
+    },
+    "duplicates": {
+      "附件1_单品编码": "0 duplicates",
+      "附件2": "not checked (transaction-level, duplicates expected)"
+    },
+    "impossible_values": {
+      "附件2_销量": "1 row >50kg (160kg at 2021-02-11, likely bulk/error); 461 returns with negative qty",
+      "附件2_单价": "16 rows >100 yuan/kg (max 119.9, plausible for premium items)",
+      "附件3_批发价": "27 rows ≤0.01 yuan/kg (near-zero, suspicious); 4 rows ≥100 yuan/kg",
+      "附件4_损耗率": "some products have 0.00% loss rate (suspicious: true zero or data issue?)"
+    },
+    "outliers": {
+      "批发价_near_zero": "27 records ≤0.01 — may be data entry errors or free samples",
+      "批发价_high": "4 records ≥100 — 141 max, possibly truffles or rare mushrooms",
+      "销量_extreme": "1 record 160kg — single bulk transaction, not representative"
+    }
+  },
+  "coverage": {
+    "rows": 878503,
+    "effective_sample_size": 246,
+    "time_range": "2020-07-01 ~ 2023-06-30",
+    "time_gaps": "10 days missing out of 1095 (0.9%)",
+    "product_sparsity": {
+      "never_sold": 5,
+      "sold_less_than_30_days": 87,
+      "sold_less_than_365_days": 199,
+      "sold_all_3_years": 47,
+      "note": "Only 47/251 products have ≥365 days of sales. Most products are seasonal or intermittently available."
+    }
+  },
+  "distribution_risks": {
+    "class_imbalance": {
+      "category_counts": {"花叶类":100,"食用菌":72,"辣椒类":45,"水生根茎类":19,"茄类":10,"花菜类":5},
+      "imbalance_ratio": "20:1 (花叶类:花菜类)",
+      "risk": "花菜类仅有5个单品，统计推断不稳定"
+    },
+    "rare_categories": ["花菜类 (5 products)", "茄类 (10 products)"],
+    "high_cardinality": ["单品编码 (251 levels)"],
+    "redundancy_warnings": ["分类编码与分类名称一一对应，保留一个即可"],
+    "concentration_metrics": {
+      "sales_concentration": "to be computed in EDA",
+      "price_skewness": "销售单价right-skewed"
+    }
+  },
+  "per_question_readiness": {
+    "Q1": {
+      "status": "ready_with_warnings",
+      "warnings": [
+        "5 products never sold — exclude from Q1 analysis",
+        "87 products with <30 sales days — flag as sparse in correlation analysis",
+        "Category imbalance may skew correlation significance",
+        "退货461条 — remove or net out before analysis"
+      ]
+    },
+    "Q2": {
+      "status": "ready_with_warnings",
+      "warnings": [
+        "27批发价records ≤0.01 — winsorize or flag before demand estimation",
+        "Cost-plus relationship requires daily aggregation and wholesale-sales price alignment",
+        "Loss rate is static (not time-varying) — accept as constant assumption",
+        "No inventory/stockout data — cannot distinguish zero-demand from stockout",
+        "10 missing days in time series — may need interpolation for ARIMA-type models"
+      ]
+    },
+    "Q3": {
+      "status": "ready_with_warnings",
+      "warnings": [
+        "June 24-30 eligible product count unknown — need to compute from data",
+        "0% loss rate products suspicious — verify before using in optimization",
+        "Space constraint is qualitative — must operationalize or assume",
+        "Minimum display 2.5kg vs realistic demand: some products may not reach 2.5kg/day"
+      ]
+    },
+    "Q4": {
+      "status": "ready",
+      "warnings": []
+    }
+  },
+  "cleaned_files": [],
+  "unresolved_risks": [
+    "批发价≤0.01的27条记录需要人工判断：录入错误/赠品/特殊促销？",
+    "损耗率=0%的单品是否真实（完美保鲜？数据错误？）",
+    "5个从未销售的单品：应直接排除还是保留在候选池？",
+    "打折数据(5.4%)的原因混合：运损清仓 vs 库存过剩清仓，建模时需选择处理方式（已在framing中决定为被动清仓）"
+  ]
+}

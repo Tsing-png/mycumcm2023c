@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "subquestions": [
+    {
+      "id": "Q1",
+      "primary_type": "descriptive/inference",
+      "secondary_type": null,
+      "confidence": "high",
+      "evidence": [
+        "Required output: 分布特征描述、时间序列规律、关联关系（相关系数矩阵/关联网络）",
+        "No decisions to optimize, no future values to predict, no labels to assign",
+        "Success criteria: 统计检验支撑、关联方向和强度度量"
+      ],
+      "required_validation": [
+        "分布形态检验（Shapiro-Wilk, Kolmogorov-Smirnov等）",
+        "相关性显著性和多重检验校正",
+        "时间序列平稳性和周期性检验",
+        "关联网络或聚类的稳定性评估"
+      ],
+      "framing_decision_id": null,
+      "risks": [
+        "相关性不等于因果——需在结论中明确界限",
+        "3年数据含疫情期，分布可能非平稳",
+        "246个单品的关联矩阵稀疏性问题"
+      ]
+    },
+    {
+      "id": "Q2",
+      "primary_type": "optimization/decision",
+      "secondary_type": "prediction/estimation",
+      "confidence": "high",
+      "evidence": [
+        "Primary required output: 补货量和定价策略使收益最大 → optimization/decision",
+        "Prerequisite: 需求函数（销量与定价的关系）的估计 → prediction/estimation",
+        "Genuinely mixed: prediction feeds optimization, not merely analytical steps in parallel",
+        "Constrained by: 单周期库存（当日未售隔日作废）、成本加成定价框架"
+      ],
+      "required_validation": [
+        "需求函数预测误差（MAPE, RMSE, 或交叉验证）",
+        "优化解的可行性和边界检查",
+        "补货量和定价的历史合理性",
+        "与baseline（如历史均值补货+固定加成）的收益对比",
+        "价格弹性和损耗率假设的敏感性"
+      ],
+      "framing_decision_id": "framing_profit_function",
+      "risks": [
+        "需求函数估计的质量决定优化结果可信度",
+        "批发价在补货决策时不完全知晓（凌晨3-4点进货，批发价数据可能滞后）",
+        "品类级聚合可能掩盖单品差异导致的收益损失",
+        "7月1-7日为未来预测，无实际数据验证"
+      ]
+    },
+    {
+      "id": "Q3",
+      "primary_type": "optimization/decision",
+      "secondary_type": "prediction/estimation",
+      "confidence": "high",
+      "evidence": [
+        "Primary required output: 单品选择(27-33个)+补货量+定价，最大化收益 → optimization/decision",
+        "Combinatorial constraint: SKU selection is discrete (subset selection)",
+        "Continuous decisions: per-SKU quantity ≥ 2.5kg and pricing",
+        "Multi-objective element: profit maximization + demand satisfaction (resolved as penalty in objective per human decision)",
+        "Prerequisite: per-SKU demand estimates → prediction/estimation"
+      ],
+      "required_validation": [
+        "SKU选择稳定性（微小扰动下入选集合是否变化）",
+        "补货量和定价的可行性和边界",
+        "品类需求满足度与收益的trade-off曲线",
+        "与baseline（如按销量排序top-N选品+Q2定价）的对比"
+      ],
+      "framing_decision_id": "framing_q3_demand_satisfaction",
+      "risks": [
+        "组合优化可能NP-hard，需注意求解效率和近似质量",
+        "6月24-30日可售品种数未知，可能远超33个",
+        "单品需求预测比品类级噪声更大",
+        "空间约束仅为定性描述，无量化数据"
+      ]
+    },
+    {
+      "id": "Q4",
+      "primary_type": "descriptive/inference",
+      "secondary_type": "evaluation/ranking",
+      "confidence": "medium",
+      "evidence": [
+        "Required output: 数据建议清单+理由+优先级 → qualitative recommendation",
+        "Not a pure evaluation (no formal scoring metrics), not optimization (no decision variables)",
+        "Primary descriptive/inference: 识别数据缺口并推断其影响",
+        "Secondary evaluation/ranking: 按边际价值对建议排序",
+        "Medium confidence because this question type is less standard in the taxonomy"
+      ],
+      "required_validation": [
+        "每条建议对应Q1-Q3中的具体模型改进点",
+        "优先级排序有明确逻辑（非随意排列）",
+        "建议数据在当前技术条件下可采集"
+      ],
+      "framing_decision_id": null,
+      "risks": [
+        "建议可能过于泛化而缺乏针对Q1-Q3的具体性",
+        "无数据可验证建议的实际边际价值",
+        "Q4需等Q1-Q3完成才能写出有实质内容的回答"
+      ]
+    }
+  ]
+}

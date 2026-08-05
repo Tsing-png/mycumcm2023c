@@ -3,9 +3,12 @@
   "question_id": "Q4",
   "rigor_profile": "lean",
   "current_gate": "G1",
-  "status": "problem_framed",
+  "status": "data_audited",
   "artifacts": {
     "problem_parse": "planning/parse/problem_parse.json",
+    "problem_classification": "planning/classification/problem_classification.json",
+    "data_profile": "workspace/data/data_profile.json",
+    "literature_analysis": "workspace/papers/related_paper_analysis.md",
     "method_card": null,
     "decision_ledger": null,
     "risk_probe": null,
@@ -17,11 +20,11 @@
     "paper_writing": false,
     "final_assembly": false
   },
-  "blockers": ["classification pending", "Q4 classification depends on Q1-Q3 findings"],
+  "blockers": ["Q4 qualitative — method screening less applicable; defer until Q1-Q3 complete"],
   "next_action": {
     "owner": "ai",
-    "skill": "problem-classifier",
-    "reason": "G1 parse complete; Q4 is qualitative but still needs classification"
+    "skill": "method-selector",
+    "reason": "G1 complete for all Q; Q4 can be planned alongside Q1-Q3"
   },
   "updated_at": "2026-08-05T00:00:00Z"
 }
