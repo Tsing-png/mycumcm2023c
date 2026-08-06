@@ -1,0 +1,72 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{模型建立}
+
+针对问题三，本节在问题二的报童框架下建立单品级优化模型。
+
+\textbf{步骤1：单品需求估计}
+
+对每个入选单品$j$，以最近30天的日均销量$\mu_j$和标准差$\sigma_j$作为需求分布参数。需求经品类价格弹性调整：
+\begin{equation}
+  D_j(\alpha_j) = \mu_j \cdot \left(\frac{(1+\alpha_j)C_j}{(1+\bar{\alpha}_{\text{cat}})C_j}\right)^{e_{\text{cat}}}
+\end{equation}
+其中$e_{\text{cat}}$沿用问题二的自有弹性估计，确保跨题一致性。
+
+\textbf{步骤2：单品报童优化}
+
+对每个单品$j$独立优化加成率和订货量：
+\begin{equation}
+  \max_{\alpha_j \geq 0,\; Q_j \geq 2.5} \; P_j \cdot \mathbb{E}[\min(Q_j, D_j)] + kP_j \cdot \mathbb{E}[(Q_j - D_j)^+] - \frac{C_j}{1 - \ell_j/100} \cdot Q_j
+\end{equation}
+其中$P_j = (1+\alpha_j)C_j$，$k=0.66$同问题二。
+
+\textbf{步骤3：需求满足惩罚项}
+
+根据"尽量满足市场需求"的要求，将需求满足作为惩罚项纳入目标函数：
+\begin{equation}
+  \Pi_{\text{penalized}} = \sum_{j} \pi_j - \lambda \sum_i \max\left(0,\; \beta D_i^{\text{ref}} - \sum_{j \in \mathcal{I}_i} Q_j\right)
+\end{equation}
+其中$\lambda$为惩罚权重，$\beta$为需求满足阈值。
+
+求解采用二维网格搜索（加成率25步$\times$订货量因子25步），每点3,000次Monte Carlo抽样估计期望利润。
+
+\subsubsection{模型求解}
+
+基于上述模型，本节利用Python（numpy, scipy）进行求解。Q2的自有价格弹性估计作为跨题一致的弹性输入。
+
+求解得到31个单品的最优策略，完整单品清单见支撑材料。各品类汇总结果如表\ref{tab:q3summary}所示。单日总期望利润为1,327元，总订货量为436.5 kg。
+
+\begin{table}[H]
+  \centering
+  \caption{各品类单品汇总结果（2023年7月1日）}
+  \label{tab:q3summary}
+  \begin{tabularx}{\textwidth}{CCCCC}
+    \toprule
+    品类 & 入选数 & 品类订货量（kg） & 需求基准（kg） & 满足率 \\
+    \midrule
+    水生根茎类 & 3 & 17.1 & 16.7 & 78.6\% \\
+    花叶类 & 12 & 142.7 & 124.8 & 178.9\% \\
+    花菜类 & 2 & 28.2 & 16.2 & 152.2\% \\
+    茄类 & 3 & 39.2 & 19.0 & 190.0\% \\
+    辣椒类 & 6 & 132.0 & 77.6 & 155.2\% \\
+    食用菌 & 5 & 77.1 & 44.2 & 187.6\% \\
+    \midrule
+    合计 & 31 & 436.5 & -- & -- \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+各品类需求满足率如图\ref{fig:satisfaction}所示，范围为78.6\%--190.0\%，全部超过50\%的fallback阈值。水生根茎类满足率最低（78.6\%），原因是该品类仅3个单品达标且各自日均销量有限（约5 kg/天）。其余五个品类满足率均超过150\%。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.80\textwidth]{figures/fig5_demand_satisfaction.png}
+  \caption{各品类需求满足率}
+  \label{fig:satisfaction}
+\end{figure}
+
+设置固定加成baseline：同31个单品采用历史平均加成率，订货量$Q = \mu/(1-\ell/100)$。相同参数下Baseline单日利润为465元。M1增益（+185\%）完全来自单品级加成率优化——两方法使用完全相同的31个单品。单品加成率标准差0.311，表明优化后的加成率在单品间有充分区分度。
+
+在当前数据下，过滤法使全部品类满足率超过78\%，需求满足惩罚项实际未激活。31个单品的完整策略表及代码见支撑材料。
+
+综上所述，本节将单品级补货与定价分解为过滤与优化两步。31个达标单品自然落在题目要求范围内，各单品独立优化实现了1,327元/天的利润，较固定加成baseline提升185\%。全部品类需求满足率超过78\%，模型给出了各品类差异化且可执行的单品级策略。

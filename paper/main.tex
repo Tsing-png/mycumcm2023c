@@ -1,0 +1,71 @@
+%! TEX program = xelatex
+
+\PassOptionsToPackage{quiet}{xeCJK}
+\documentclass[withoutpreface,bwprint]{cumcmthesis}
+\usepackage{etoolbox}
+\usepackage{ctex}
+\BeforeBeginEnvironment{tabular}{\zihao{-5}}
+% 参考文献改用纯tex格式，不再需要natbib+bibtex
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{url}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{longtable}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\tikzset{
+  box/.style={rectangle, draw, minimum width=3.2cm, minimum height=0.9cm, align=center},
+  arrow/.style={thick, -{Stealth}}
+}
+
+\title{蔬菜类商品的自动定价与补货决策}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 正文
+\begin{document}
+
+% 标题
+{\centering\zihao{3}\bfseries 蔬菜类商品的自动定价与补货决策\par}
+
+\setcounter{page}{1}
+
+\thispagestyle{empty}
+
+\input{sections/0.摘要.tex}
+\thispagestyle{empty}
+
+\tableofcontents
+\thispagestyle{empty}
+\newpage
+
+\setcounter{page}{1}
+
+\input{sections/1.引言.tex}
+
+\input{sections/2.总体分析.tex}
+
+\input{sections/3.模型假设.tex}
+
+\input{sections/4.符号说明.tex}
+
+\input{sections/5.模型的建立与求解.tex}
+
+\input{sections/6.模型检验.tex}
+
+\input{sections/7.模型评价.tex}
+
+\input{sections/8.模型改进推广.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 参考文献
+\newpage
+\input{sections/9.参考文献.tex}
+
+\newpage
+\input{sections/10.附录.tex}
+
+\end{document}

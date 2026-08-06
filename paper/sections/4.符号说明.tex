@@ -1,0 +1,41 @@
+
+\section{符号说明}
+
+本文使用的主要符号及其含义如表\ref{tab:符号说明}所示。
+
+\begin{longtable}{>{\centering\arraybackslash}p{0.22\textwidth}>{\centering\arraybackslash}p{0.74\textwidth}}
+  \caption{符号说明}
+  \label{tab:符号说明} \\
+  \toprule
+  符号 & 说明 \\
+  \midrule
+  \endfirsthead
+  \caption{符号说明（续）} \\
+  \toprule
+  符号 & 说明 \\
+  \midrule
+  \endhead
+  \bottomrule
+  \endfoot
+  $i$ & 品类索引，$i=1,\ldots,6$ \\
+  $j$ & 单品索引 \\
+  $t$ & 日期索引（天） \\
+  $S_{i,t}$ & 品类$i$在第$t$天的总销售量（kg） \\
+  $\rho_{ab}$ & 品类$a$与$b$的Spearman秩相关系数 \\
+  $\hat{D}_{i,t}$ & Prophet对品类$i$在第$t$天的需求预测（kg） \\
+  $\alpha_{i,t}$ & 品类$i$在第$t$天的加成率（决策变量） \\
+  $P_{i,t}$ & 品类$i$在第$t$天的销售定价（元/kg） \\
+  $Q_{i,t}$ & 品类$i$在第$t$天的订货量（kg，决策变量） \\
+  $C_{i,t}$ & 品类$i$在第$t$天的批发价（元/kg） \\
+  $C_{i,t}^{\text{eff}}$ & 有效单位成本$C_{i,t}/(1-L_i)$（元/kg） \\
+  $L_i$ & 品类$i$的平均损耗率 \\
+  $k$ & 折扣回收率（打折价/正价） \\
+  $e_i$ & 品类$i$的需求价格弹性 \\
+  $\pi_{i,t}$ & 品类$i$在第$t$天的期望利润（元） \\
+  $\Pi$ & 总利润（元） \\
+  $\gamma_i$ & 品类$i$的需求满足率 \\
+  $d_{\min}$ & 最小陈列量（2.5 kg） \\
+  $N$ & 入选单品数 \\
+  $\mu_j$, $\sigma_j$ & 单品$j$的日均销量（kg）及其标准差 \\
+  $\ell_j$ & 单品$j$的损耗率（\%） \\
+\end{longtable}
