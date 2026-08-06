@@ -14,8 +14,8 @@ def setup_style():
         "xtick.labelsize": 11,
         "ytick.labelsize": 11,
         "legend.fontsize": 10,
-        "figure.dpi": 150,
-        "savefig.dpi": 150,
+        "figure.dpi": 300,
+        "savefig.dpi": 300,
         "savefig.bbox": "tight",
     })
 

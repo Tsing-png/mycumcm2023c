@@ -2,33 +2,19 @@
   "schema_version": 1,
   "question_id": "Q4",
   "rigor_profile": "lean",
-  "current_gate": "G1",
-  "status": "deferred",
+  "current_gate": "G4",
+  "status": "completed",
   "artifacts": {
-    "problem_parse": "planning/parse/problem_parse.json",
-    "problem_classification": "planning/classification/problem_classification.json",
-    "data_profile": "workspace/data/data_profile.json",
-    "literature_analysis": "workspace/papers/related_paper_analysis.md",
-    "method_card": null,
-    "decision_ledger": null,
-    "risk_probe": null,
-    "latest_run": null,
-    "symbol_table": "planning/symbol_table.md",
-    "model_assumptions": "planning/model_assumptions.md"
+    "G1_problem_parse": "planning/parse/problem_parse.json",
+    "G1_classification": "planning/classification/problem_classification.json",
+    "G1_data_profile": "workspace/data/data_profile.json",
+    "G1_literature": "workspace/papers/related_paper_analysis.md",
+    "G1_symbol_table": "planning/symbol_table.md",
+    "G1_model_assumptions": "planning/model_assumptions.md",
+    "G4_q4_recommendations": "methods/Q4/q4_data_recommendations.md"
   },
-  "allowed": {
-    "code_generation": false,
-    "freeze": false,
-    "paper_writing": false,
-    "final_assembly": false
-  },
-  "blockers": [
-    "Q4 is qualitative — depends on concrete data limitation experience from Q1-Q3 experiments"
-  ],
-  "next_action": {
-    "owner": "ai",
-    "skill": "deferred",
-    "reason": "Q4 requires actual modeling experience from Q1-Q3. Will synthesize: (a) data gaps encountered during Q1-Q3 implementation, (b) paper recommendations (weather, holidays, competition, inventory, origin data), (c) our own gap analysis. Run after Q1-Q3 code produces results."
-  },
+  "allowed": {"code_generation": false, "freeze": false, "paper_writing": true, "final_assembly": false},
+  "blockers": [],
+  "next_action": {"owner": "ai", "skill": "solution-package-builder", "reason": "All four questions complete. Ready to package for writer."},
   "updated_at": "2026-08-05T00:00:00Z"
 }

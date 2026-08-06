@@ -1,32 +1,27 @@
 {
-  "schema_version": 1,
-  "question_id": "Q2",
-  "rigor_profile": "lean",
-  "current_gate": "G2.5",
-  "status": "method_chosen_by_human",
+  "schema_version": 1, "question_id": "Q2", "rigor_profile": "lean",
+  "current_gate": "G4",
+  "status": "results_verified_and_explained",
   "artifacts": {
-    "problem_parse": "planning/parse/problem_parse.json",
-    "problem_classification": "planning/classification/problem_classification.json",
-    "data_profile": "workspace/data/data_profile.json",
-    "literature_analysis": "workspace/papers/related_paper_analysis.md",
-    "method_card": "methods/Q2/q2_method_card.md",
-    "decision_ledger": "planning/framing_decisions.jsonl",
-    "risk_probe": "methods/Q2/probes/risk_probe_summary.json",
-    "latest_run": null,
-    "symbol_table": "planning/symbol_table.md",
-    "model_assumptions": "planning/model_assumptions.md"
+    "G1_problem_parse": "planning/parse/problem_parse.json",
+    "G1_classification": "planning/classification/problem_classification.json",
+    "G1_data_profile": "workspace/data/data_profile.json",
+    "G1_literature": "workspace/papers/related_paper_analysis.md",
+    "G1_symbol_table": "planning/symbol_table.md",
+    "G1_model_assumptions": "planning/model_assumptions.md",
+    "G2_method_card": "methods/Q2/q2_method_card.md",
+    "G2_risk_probe": "methods/Q2/probes/risk_probe_summary.json",
+    "G2.5_decision": "planning/framing_decisions.jsonl (q2_method_choice)",
+    "G3_code_plan": "code/Q2/q2_code_plan.md",
+    "G3_main_code": "code/Q2/q2_main.py",
+    "G3_baseline_code": "code/Q2/q2_baseline.py",
+    "G3_run_summary": "results/Q2/experiments/round1/run_summary.json",
+    "G3_review": "code/Q2/reviews/q2_python_review.json (PASSED)",
+    "G4_robustness": "robustness/Q2/q2_robustness_summary.json",
+    "G4_final_method_explanation": "methods/Q2/q2_final_method_explanation.md"
   },
-  "allowed": {
-    "code_generation": true,
-    "freeze": false,
-    "paper_writing": false,
-    "final_assembly": false
-  },
-  "blockers": [],
-  "next_action": {
-    "owner": "ai",
-    "skill": "model-code-analyzer",
-    "reason": "G2.5 passed. M1=Prophet+Newsvendor(constrained), M2=ARIMA+FixedMarkup. Ready for code plan."
-  },
+  "allowed": {"code_generation": false, "freeze": false, "paper_writing": true, "final_assembly": false},
+  "blockers": ["solution_package not yet built"],
+  "next_action": {"owner": "ai", "skill": "solution-package-builder", "reason": "G4 lean complete."},
   "updated_at": "2026-08-05T00:00:00Z"
 }

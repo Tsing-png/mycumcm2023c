@@ -1,32 +1,28 @@
 {
-  "schema_version": 1,
-  "question_id": "Q1",
-  "rigor_profile": "lean",
-  "current_gate": "G2.5",
-  "status": "method_chosen_by_human",
+  "schema_version": 1, "question_id": "Q1", "rigor_profile": "lean",
+  "current_gate": "G4",
+  "status": "results_verified_and_explained",
   "artifacts": {
-    "problem_parse": "planning/parse/problem_parse.json",
-    "problem_classification": "planning/classification/problem_classification.json",
-    "data_profile": "workspace/data/data_profile.json",
-    "literature_analysis": "workspace/papers/related_paper_analysis.md",
-    "method_card": "methods/Q1/q1_method_card.md",
-    "decision_ledger": "planning/framing_decisions.jsonl",
-    "risk_probe": "methods/Q1/probes/risk_probe_summary.json",
-    "latest_run": null,
-    "symbol_table": "planning/symbol_table.md",
-    "model_assumptions": "planning/model_assumptions.md"
+    "G1_problem_parse": "planning/parse/problem_parse.json",
+    "G1_classification": "planning/classification/problem_classification.json",
+    "G1_data_profile": "workspace/data/data_profile.json",
+    "G1_data_report": "workspace/data/data_report.md",
+    "G1_literature": "workspace/papers/related_paper_analysis.md",
+    "G1_symbol_table": "planning/symbol_table.md",
+    "G1_model_assumptions": "planning/model_assumptions.md",
+    "G2_method_card": "methods/Q1/q1_method_card.md",
+    "G2_risk_probe": "methods/Q1/probes/risk_probe_summary.json",
+    "G2.5_decision": "planning/framing_decisions.jsonl (q1_method_choice)",
+    "G3_code_plan": "code/Q1/q1_code_plan.md",
+    "G3_main_code": "code/Q1/q1_main.py",
+    "G3_baseline_code": "code/Q1/q1_baseline.py",
+    "G3_run_summary": "results/Q1/experiments/round1/run_summary.json",
+    "G3_review": "code/Q1/reviews/q1_python_review.json (PASSED)",
+    "G4_robustness": "robustness/Q1/q1_robustness_summary.json",
+    "G4_final_method_explanation": "methods/Q1/q1_final_method_explanation.md"
   },
-  "allowed": {
-    "code_generation": true,
-    "freeze": false,
-    "paper_writing": false,
-    "final_assembly": false
-  },
-  "blockers": [],
-  "next_action": {
-    "owner": "ai",
-    "skill": "model-code-analyzer",
-    "reason": "G2.5 passed. M1=Spearman+KMeans++, M2=Pearson+Hierarchical(diagnostic). Ready for code plan."
-  },
+  "allowed": {"code_generation": false, "freeze": false, "paper_writing": true, "final_assembly": false},
+  "blockers": ["solution_package not yet built", "final_result_analysis not yet written"],
+  "next_action": {"owner": "ai", "skill": "solution-package-builder", "reason": "G4 lean complete. Ready to package for writer handoff."},
   "updated_at": "2026-08-05T00:00:00Z"
 }

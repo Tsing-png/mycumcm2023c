@@ -11,7 +11,7 @@
       "role": "main",
       "script": "code/Q3/q3_main.py",
       "status": "success",
-      "execution_time_seconds": 4.2,
+      "execution_time_seconds": 3.9,
       "input_files": [
         "workspace/data_clean/daily_sales.csv",
         "workspace/data_clean/item_loss_rates.csv"

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-08-05T00:00:00Z",
+  "frozen_by": "solution-package-builder",
+  "status": "pending_human_signoff",
+  "claims": [
+    {
+      "claim_id": "q1_spearman_range",
+      "value": [-0.1937, 0.6253],
+      "unit": "dimensionless",
+      "source": "results/Q1/experiments/round1/run_summary.json",
+      "locator": "$.methods[0].metrics_summary.spearman_rho_range"
+    },
+    {
+      "claim_id": "q1_best_k", "value": 2, "unit": "count",
+      "source": "results/Q1/experiments/round1/run_summary.json",
+      "locator": "$.methods[0].metrics_summary.best_k"
+    },
+    {
+      "claim_id": "q1_silhouette", "value": 0.4632, "unit": "dimensionless",
+      "source": "results/Q1/experiments/round1/run_summary.json",
+      "locator": "$.methods[0].metrics_summary.silhouette_score"
+    },
+    {
+      "claim_id": "q1_pearson_invalid", "value": false, "unit": "boolean",
+      "source": "results/Q1/experiments/round1/metrics/q1_comparison.json",
+      "locator": "$.pearson_valid"
+    },
+    {
+      "claim_id": "q2_m1_daily_profit", "value": 2918.2, "unit": "yuan/day",
+      "source": "results/Q2/experiments/round1/run_summary.json",
+      "locator": "$.methods[0].metrics_summary.单日总利润_元"
+    },
+    {
+      "claim_id": "q2_m1_weekly_profit_estimate", "value": 20427.4, "unit": "yuan/7days",
+      "source": "results/Q2/experiments/round1/run_summary.json",
+      "locator": "$.methods[0].metrics_summary.七日总利润估计_元"
+    },
+    {
+      "claim_id": "q2_markup_std", "value": 0.082, "unit": "dimensionless",
+      "source": "results/Q2/experiments/round1/run_summary.json",
+      "locator": "$.methods[0].metrics_summary.加成率标准差"
+    },
+    {
+      "claim_id": "q2_markup_range", "value": [1.0361, 1.2821], "unit": "dimensionless",
+      "source": "results/Q2/experiments/round1/run_summary.json",
+      "locator": "$.methods[0].metrics_summary.加成率范围"
+    },
+    {
+      "claim_id": "q2_k_sensitivity_range", "value": [2362, 3713], "unit": "yuan/day",
+      "source": "robustness/Q2/q2_robustness_summary.json",
+      "locator": "$.checks[0].observed"
+    },
+    {
+      "claim_id": "q2_own_elasticity_huaye", "value": -0.2344, "unit": "dimensionless",
+      "source": "results/Q2/experiments/round1/tables/q2_elasticity_estimates.csv",
+      "locator": "row 花叶类, column 价格弹性"
+    },
+    {
+      "claim_id": "q3_m1_daily_profit", "value": 1326.9, "unit": "yuan/day",
+      "source": "results/Q3/experiments/round1/run_summary.json",
+      "locator": "$.methods[0].metrics_summary.单日总利润_元"
+    },
+    {
+      "claim_id": "q3_selected_skus", "value": 31, "unit": "count",
+      "source": "results/Q3/experiments/round1/run_summary.json",
+      "locator": "$.methods[0].metrics_summary.入选单品数"
+    },
+    {
+      "claim_id": "q3_min_demand_satisfaction", "value": 0.7858, "unit": "dimensionless",
+      "source": "results/Q3/experiments/round1/run_summary.json",
+      "locator": "$.methods[0].metrics_summary.最低需求满足率"
+    },
+    {
+      "claim_id": "q3_markup_std", "value": 0.3108, "unit": "dimensionless",
+      "source": "results/Q3/experiments/round1/run_summary.json",
+      "locator": "$.methods[0].metrics_summary.加成率标准差"
+    }
+  ]
+}
