@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "question": "Q1",
+  "round": "round1",
+  "implementation_target": "python",
+  "random_seed": 42,
+  "approved_decision_id": "q1_method_choice",
+  "methods": [
+    {
+      "method_id": "M1",
+      "role": "main",
+      "script": "code/Q1/q1_main.py",
+      "status": "success",
+      "execution_time_seconds": 0.445,
+      "input_files": [
+        "workspace/data_clean/daily_sales.csv"
+      ],
+      "output_files": [
+        "tables/q1_spearman_corr.csv",
+        "tables/q1_cluster_assignments.csv",
+        "tables/q1_distribution_params.csv"
+      ],
+      "figure_files": [
+        "figures/q1_corr_heatmap_spearman.png",
+        "figures/q1_cluster_silhouette.png",
+        "figures/q1_monthly_sales_trend.png"
+      ],
+      "metrics_summary": {
+        "spearman_rho_range": [
+          -0.1937,
+          0.6253
+        ],
+        "spearman_mean_abs_rho": 0.3954,
+        "best_k": 2,
+        "silhouette_score": 0.4632,
+        "normality_all_non_normal": true,
+        "products_clustered": 159,
+        "deg_all_corr_zero": false,
+        "deg_single_cluster": false
+      },
+      "warnings": [],
+      "errors": []
+    }
+  ],
+  "comparison": {},
+  "fallback_trigger": {
+    "fallback_id": null,
+    "condition": null,
+    "observed": false
+  },
+  "environment": {
+    "python": "3.10",
+    "key_packages": "pandas scipy scikit-learn matplotlib seaborn"
+  }
+}

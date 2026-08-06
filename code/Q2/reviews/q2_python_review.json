@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "question_id": "Q2",
+  "language": "python",
+  "reviewed_files": ["code/Q2/q2_main.py", "code/Q2/q2_baseline.py", "code/Q2/q2_code_plan.md"],
+  "decision_id": "q2_method_choice",
+  "checks": {
+    "syntax": {
+      "status": "PASS",
+      "evidence": [
+        "q2_main.py: executed successfully, 10s runtime, no exceptions",
+        "q2_baseline.py: executed successfully, 13s runtime, no exceptions",
+        "Imports: prophet, statsmodels, pandas, numpy, scipy — all available in venv",
+        "Prophet fits all 6 categories without error (Chain [1] start/done ×6)"
+      ]
+    },
+    "input_contract": {
+      "status": "PASS",
+      "evidence": [
+        "Reads workspace/data_clean/daily_sales.csv — correct cleaned data path",
+        "Uses fields: 销售日期, total_qty, avg_price, 批发价格(元/千克), 分类名称 — all exist",
+        "Cost filter: C > 0.01 (excludes 27 near-zero wholesale prices per data profile)",
+        "Raw data untouched",
+        "Train/test split: through 2023-05-31 train, June 2023 holdout — documented in code plan"
+      ]
+    },
+    "method_alignment": {
+      "status": "PASS",
+      "evidence": [
+        "M1: Prophet with yearly+weekly seasonality, CN holidays — matches code plan and 吴萌 et al.",
+        "M1: No price regressor in Prophet (probe showed it worsens holdout RMSE)",
+        "M1: Price elasticity estimated from own data (Double-log regression) — matches H5 human decision",
+        "M1: Constrained newsvendor grid search — markup ∈ [hist-0.4, hist+0.5], Q_factor ∈ [0.6, 1.8]",
+        "M1: Q bounded by historical max × 1.5 — matches risk probe mitigation",
+        "M1: k=0.66 empirical median — matches probe recommendation",
+        "M1: k sensitivity reported for {0.3, 0.5, 0.66, 0.75, 0.9}",
+        "M2: ARIMA grid search (p∈[1,2],d∈[0,1],q∈[1,2]) by AIC — matches code plan",
+        "M2: Fixed markup = historical mean — matches baseline definition",
+        "M3 fallback: NOT implemented (trigger not activated — Prophet RMSE < ARIMA RMSE overall)"
+      ]
+    },
+    "reproducibility": {
+      "status": "PASS",
+      "evidence": [
+        "Random seed: SEED=42 for Monte Carlo profit estimation (RandomState)",
+        "Prophet internal Stan seed: deterministic given same data",
+        "ARIMA: statsmodels ARIMA is deterministic (no stochastic components)",
+        "Dependencies: prophet, statsmodels, pandas, numpy, scipy, matplotlib",
+        "Grid search ranges hardcoded in script — reproducible parameter space"
+      ]
+    },
+    "output_contract": {
+      "status": "PASS",
+      "evidence": [
+        "run_summary.json: valid JSON, records M1 metrics, k sensitivity, fallback state",
+        "Tables: q2_m1_optimal_policy.csv (6 rows), q2_m2_baseline_policy.csv (6 rows), q2_elasticity_estimates.csv (6 rows)",
+        "Figures: q2_prophet_components_花叶类.png (Prophet decomposition), q2_markup_comparison.png (hist vs opt markup bar chart), q2_profit_bar.png",
+        "Comparable output: M1 单日总利润=2918元, M2 单日总利润=723元 — directly comparable on same categories and profit formula",
+        "Degeneracy evidence: markup std=0.082 (>0.01 threshold), all profits positive",
+        "Fallback trigger: not observed (M3 condition: Prophet RMSE > ARIMA RMSE for 3+ categories — not met)",
+        "Elasticity comparison: own estimates computed and saved (differs from 聂森 — confirms H5)"
+      ]
+    }
+  },
+  "findings": [
+    {
+      "severity": "info",
+      "check": "method_alignment",
+      "detail": "Own price elasticity estimates differ from 聂森 et al. (2024). 水生根茎类: -1.01 vs -0.03 (聂森). 花叶类: -0.23 vs -1.92 (聂森). This confirms H5 human decision to estimate from own data. Large discrepancies for 水生根茎类 and 花叶类 should be noted in paper."
+    },
+    {
+      "severity": "info",
+      "check": "output_contract",
+      "detail": "M2 baseline ARIMA underpredicts 水生根茎类 (13.4 vs Prophet 30.6 kg) — ARIMA misses seasonal recovery. This inflates the M1 vs M2 profit gap (2918 vs 723). The gap is partly driven by better seasonal forecasting (Prophet advantage) and partly by markup optimization."
+    }
+  ],
+  "verdict": "PASSED",
+  "reviewed_at": "2026-08-05T00:00:00Z"
+}

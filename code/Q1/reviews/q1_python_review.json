@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "question_id": "Q1",
+  "language": "python",
+  "reviewed_files": ["code/Q1/q1_main.py", "code/Q1/q1_baseline.py", "code/Q1/q1_code_plan.md"],
+  "decision_id": "q1_method_choice",
+  "checks": {
+    "syntax": {
+      "status": "PASS",
+      "evidence": [
+        "q1_main.py: executed successfully, 0.4s runtime, no exceptions",
+        "q1_baseline.py: executed successfully, 0.4s runtime, no exceptions",
+        "Imports: pandas, numpy, scipy.stats, sklearn.cluster, matplotlib, seaborn — all available in venv"
+      ]
+    },
+    "input_contract": {
+      "status": "PASS",
+      "evidence": [
+        "Reads workspace/data_clean/daily_sales.csv (correct cleaned data path)",
+        "Uses fields: 销售日期, total_qty, avg_price, 分类名称, 单品编码 — all exist in daily_sales.csv",
+        "Does not read raw data (workspace/data_raw/ untouched)",
+        "Filters applied per code plan: exclude returns (pre-cleaned), >=30 sales days for clustering"
+      ]
+    },
+    "method_alignment": {
+      "status": "PASS",
+      "evidence": [
+        "M1 implements Spearman rank correlation — matches approved main method",
+        "M1 implements K-means++ clustering with silhouette selection (K=2..7) — matches code plan",
+        "M1 implements distribution fitting (norm, lognorm, gamma) — matches code plan",
+        "M2 implements Pearson correlation + Ward hierarchical clustering — matches diagnostic reference role",
+        "Normality verification confirms M2 assumption violation (all 6 categories p<0.000001)",
+        "Fallback: none needed (Q1 descriptive, no fallback in plan)"
+      ]
+    },
+    "reproducibility": {
+      "status": "PASS",
+      "evidence": [
+        "Random seed: SEED=42 set for sklearn KMeans (random_state=42, n_init=10)",
+        "No stochastic operations beyond KMeans (which is seeded)",
+        "Dependencies recorded: pandas, numpy, scipy, scikit-learn, matplotlib, seaborn",
+        "Deterministic: Spearman correlation, normality tests, distribution fitting are all deterministic"
+      ]
+    },
+    "output_contract": {
+      "status": "PASS",
+      "evidence": [
+        "run_summary.json: valid JSON, schema_version=1, records SEED, methods, metrics, fallback state",
+        "Tables: q1_spearman_corr.csv (6x6), q1_pearson_corr.csv (6x6), q1_cluster_assignments.csv (159 rows), q1_distribution_params.csv (6 rows)",
+        "Figures: 5 PNG files at 150 DPI — heatmap (Spearman), heatmap (Pearson), silhouette, dendrogram, monthly trend",
+        "Metrics: q1_comparison.json — Spearman vs Pearson directional agreement (86.7%), max diff (0.299)",
+        "Degeneracy evidence in run_summary: all_corr_zero=false, single_cluster=false",
+        "Comparable output: M1 ρ vs M2 r directly comparable with documented divergence"
+      ]
+    }
+  },
+  "findings": [
+    {
+      "severity": "info",
+      "check": "output_contract",
+      "detail": "M2 Pearson labeled as diagnostic_reference in code plan but produces complete comparable output. Pearson INVALID due to non-normality — this is correctly documented in run output and metrics."
+    }
+  ],
+  "verdict": "PASSED",
+  "reviewed_at": "2026-08-05T00:00:00Z"
+}

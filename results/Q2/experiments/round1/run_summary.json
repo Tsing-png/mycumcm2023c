@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "question": "Q2",
+  "round": "round1",
+  "implementation_target": "python",
+  "random_seed": 42,
+  "approved_decision_id": "q2_method_choice",
+  "methods": [
+    {
+      "method_id": "M1",
+      "role": "main",
+      "script": "code/Q2/q2_main.py",
+      "status": "success",
+      "execution_time_seconds": 10.0,
+      "input_files": [
+        "workspace/data_clean/daily_sales.csv"
+      ],
+      "output_files": [
+        "tables/q2_m1_optimal_policy.csv",
+        "tables/q2_elasticity_estimates.csv"
+      ],
+      "figure_files": [
+        "figures/q2_prophet_components_花叶类.png",
+        "figures/q2_markup_comparison.png",
+        "figures/q2_profit_bar.png"
+      ],
+      "metrics_summary": {
+        "单日总利润_元": 2918.2,
+        "七日总利润估计_元": 20427.4,
+        "加成率标准差": 0.082,
+        "加成率范围": [
+          1.0361,
+          1.2821
+        ],
+        "全部正利润": true,
+        "退化检查_加成率统一": false,
+        "k敏感性": {
+          "0.3": 1828.3,
+          "0.5": 2526.9,
+          "0.66": 3085.8,
+          "0.75": 3400.2,
+          "0.9": 3924.2
+        }
+      },
+      "warnings": [],
+      "errors": []
+    }
+  ],
+  "comparison": {},
+  "fallback_trigger": {
+    "fallback_id": "M3",
+    "condition": "Prophet RMSE > ARIMA RMSE 3+品类",
+    "observed": false
+  },
+  "environment": {
+    "python": "3.10",
+    "key_packages": "prophet pandas numpy scipy matplotlib"
+  }
+}

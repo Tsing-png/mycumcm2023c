@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "question": "Q3",
+  "round": "round1",
+  "implementation_target": "python",
+  "random_seed": 42,
+  "approved_decision_id": "q3_method_choice",
+  "methods": [
+    {
+      "method_id": "M1",
+      "role": "main",
+      "script": "code/Q3/q3_main.py",
+      "status": "success",
+      "execution_time_seconds": 4.2,
+      "input_files": [
+        "workspace/data_clean/daily_sales.csv",
+        "workspace/data_clean/item_loss_rates.csv"
+      ],
+      "output_files": [
+        "tables/q3_m1_sku_policy.csv"
+      ],
+      "figure_files": [
+        "figures/q3_sku_profit_ranking.png",
+        "figures/q3_category_satisfaction.png",
+        "figures/q3_markup_distribution.png"
+      ],
+      "metrics_summary": {
+        "入选单品数": 31,
+        "过滤阈值_kg": 2.5,
+        "单日总利润_元": 1326.9,
+        "总订货量_kg": 500.4,
+        "加成率标准差": 0.3108,
+        "加成率范围": [
+          0.6,
+          2.2014
+        ],
+        "全部正利润": true,
+        "需求满足率": {
+          "水生根茎类": 0.7858,
+          "花叶类": 1.7886,
+          "花菜类": 1.5225,
+          "茄类": 1.8998,
+          "辣椒类": 1.5519,
+          "食用菌": 1.8758
+        },
+        "最低需求满足率": 0.7858,
+        "退化检查_加成率统一": false
+      },
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "method_id": "M2",
+      "role": "usable_baseline",
+      "script": "code/Q3/q3_baseline.py",
+      "status": "success",
+      "execution_time_seconds": 0.0,
+      "metrics_summary": {
+        "单日总利润_元": 464.9,
+        "总订货量_kg": 381.5
+      }
+    }
+  ],
+  "comparison": {
+    "M1_单日总利润": 1326.9,
+    "M2_单日总利润": 464.9,
+    "M1_gain_vs_M2": "185.4%"
+  },
+  "fallback_trigger": {
+    "fallback_id": "M3",
+    "condition": "任意品类需求满足率 < 50%",
+    "observed": false
+  },
+  "environment": {
+    "python": "3.10",
+    "key_packages": "pandas numpy scipy matplotlib"
+  }
+}

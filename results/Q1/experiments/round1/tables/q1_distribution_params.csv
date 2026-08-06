@@ -1,0 +1,7 @@
+,best_fit,ks_p
+水生根茎类,lognorm,0.0079
+花叶类,lognorm,0.5445
+花菜类,lognorm,0.8791
+茄类,lognorm,0.9912
+辣椒类,lognorm,0.4305
+食用菌,lognorm,0.2938

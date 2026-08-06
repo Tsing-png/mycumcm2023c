@@ -1,0 +1,10 @@
+{
+  "pearson_range": [
+    0.1056,
+    0.686
+  ],
+  "spearman_vs_pearson_max_diff": 0.2993,
+  "directional_agreement": 0.8667,
+  "normality_all_pass": false,
+  "pearson_valid": false
+}
