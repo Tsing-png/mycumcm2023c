@@ -12,10 +12,21 @@
     "method_card": "methods/Q2/q2_method_card.md",
     "decision_ledger": "planning/framing_decisions.jsonl",
     "risk_probe": "methods/Q2/probes/risk_probe_summary.json",
-    "latest_run": null
+    "latest_run": null,
+    "symbol_table": "planning/symbol_table.md",
+    "model_assumptions": "planning/model_assumptions.md"
   },
-  "allowed": {"code_generation": true, "freeze": false, "paper_writing": false, "final_assembly": false},
+  "allowed": {
+    "code_generation": true,
+    "freeze": false,
+    "paper_writing": false,
+    "final_assembly": false
+  },
   "blockers": [],
-  "next_action": {"owner": "ai", "skill": "model-code-analyzer", "reason": "G2.5 passed. M1=Prophet+Newsvendor(constrained), M2=ARIMA+FixedMarkup. Ready for code plan."},
+  "next_action": {
+    "owner": "ai",
+    "skill": "model-code-analyzer",
+    "reason": "G2.5 passed. M1=Prophet+Newsvendor(constrained), M2=ARIMA+FixedMarkup. Ready for code plan."
+  },
   "updated_at": "2026-08-05T00:00:00Z"
 }

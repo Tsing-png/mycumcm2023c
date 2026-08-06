@@ -12,10 +12,19 @@
     "method_card": null,
     "decision_ledger": null,
     "risk_probe": null,
-    "latest_run": null
+    "latest_run": null,
+    "symbol_table": "planning/symbol_table.md",
+    "model_assumptions": "planning/model_assumptions.md"
   },
-  "allowed": {"code_generation": false, "freeze": false, "paper_writing": false, "final_assembly": false},
-  "blockers": ["Q4 is qualitative — depends on concrete data limitation experience from Q1-Q3 experiments"],
+  "allowed": {
+    "code_generation": false,
+    "freeze": false,
+    "paper_writing": false,
+    "final_assembly": false
+  },
+  "blockers": [
+    "Q4 is qualitative — depends on concrete data limitation experience from Q1-Q3 experiments"
+  ],
   "next_action": {
     "owner": "ai",
     "skill": "deferred",
