@@ -11,7 +11,7 @@
       "role": "main",
       "script": "code/Q1/q1_main.py",
       "status": "success",
-      "execution_time_seconds": 0.359,
+      "execution_time_seconds": 0.365,
       "input_files": [
         "workspace/data_clean/daily_sales.csv"
       ],

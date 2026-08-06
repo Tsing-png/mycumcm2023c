@@ -109,8 +109,9 @@ fig, ax = plt.subplots(figsize=FIG_WIDE)
 for cat in cat_pivot.columns:
     mc = monthly[monthly["分类名称"] == cat]
     ax.plot(range(len(mc)), mc["total_qty"].values, label=cat, alpha=0.85, linewidth=1.5)
-tick_positions = range(0, len(mc), 6)
-tick_labels = [monthly["month_str"].iloc[i] for i in tick_positions]
+    unique_months = sorted(monthly["month_str"].unique())
+    tick_positions = range(0, len(unique_months), 6)
+    tick_labels = [unique_months[i] for i in tick_positions]
 ax.set_xticks(tick_positions)
 ax.set_xticklabels(tick_labels, rotation=45, ha="right")
 ax.legend(bbox_to_anchor=(1.02, 1), loc="upper left", title="品类")

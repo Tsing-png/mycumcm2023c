@@ -48,9 +48,24 @@
       },
       "warnings": [],
       "errors": []
+    },
+    {
+      "method_id": "M2",
+      "role": "usable_baseline",
+      "script": "code/Q3/q3_baseline.py",
+      "status": "success",
+      "execution_time_seconds": 0.0,
+      "metrics_summary": {
+        "单日总利润_元": 464.9,
+        "总订货量_kg": 381.5
+      }
     }
   ],
-  "comparison": {},
+  "comparison": {
+    "M1_单日总利润": 1326.9,
+    "M2_单日总利润": 464.9,
+    "M1_gain_vs_M2": "185.4%"
+  },
   "fallback_trigger": {
     "fallback_id": "M3",
     "condition": "任意品类需求满足率 < 50%",
