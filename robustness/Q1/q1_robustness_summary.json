@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "question_id": "Q1",
+  "reviewed_at": "2026-08-05",
+  "checks": [
+    {
+      "claim": "Spearman correlations are stable across years",
+      "perturbation": "Year split (2020, 2021, 2022)",
+      "metric": "corr(ρ_2020, ρ_2021) and corr(ρ_2021, ρ_2022)",
+      "observed": {
+        "r_2020_21": 0.8238,
+        "r_2021_22": 0.168
+      },
+      "status": "CONDITIONAL",
+      "limitation": "2020 includes COVID period — ρ magnitude differs but direction mostly consistent"
+    }
+  ],
+  "summary": {
+    "total_checks": 1,
+    "passed": 0,
+    "conditional": 1,
+    "failed": 0
+  }
+}

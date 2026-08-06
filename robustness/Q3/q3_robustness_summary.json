@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "question_id": "Q3",
+  "reviewed_at": "2026-08-05",
+  "checks": [
+    {
+      "claim": "Product selection is stable under filter threshold variation",
+      "perturbation": "Threshold ∈ {2.0, 2.3, 2.5, 2.7, 3.0} kg",
+      "metric": "Number of selected SKUs and whether in [27,33]",
+      "observed": {
+        "2.0kg": 39,
+        "2.3kg": 31,
+        "2.5kg": 31,
+        "2.7kg": 31,
+        "3.0kg": 30
+      },
+      "status": "CONDITIONAL",
+      "limitation": "2.0kg threshold yields 39 products (outside [27,33]). Threshold 2.3-3.0kg is stable (30-31)."
+    },
+    {
+      "claim": "Q3 profit sensitivity to k is comparable to Q2",
+      "perturbation": "k ∈ {0.5, 0.66, 0.75}",
+      "metric": "Total Q3 expected profit",
+      "observed": {
+        "0.5": 1087.5,
+        "0.66": 1290.1,
+        "0.75": 1405.7
+      },
+      "status": "PASS",
+      "limitation": "Same k uncertainty as Q2 — bracket reporting recommended."
+    }
+  ],
+  "summary": {
+    "total_checks": 2,
+    "passed": 1,
+    "conditional": 1,
+    "failed": 0
+  }
+}
