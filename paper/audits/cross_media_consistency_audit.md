@@ -1,71 +1,56 @@
 # Cross-Media Consistency Audit (Final)
 
-**Profile**: submission
-**Date**: 2026-08-05
+**Profile**: submission | **Date**: 2026-08-05 | **Re-run**: post paper-polish
 
 ---
 
-## Check 1: Numerical claims match frozen values and units
+## Check 1: Paper numbers vs frozen_numbers.json
 
-| Claim ID | Frozen | Source | Match |
+| Claim ID | Frozen Value | In Paper | Match |
 |---|---|---|---|
-| q1_spearman_range | [−0.1937, 0.6253] | run_summary.json | ✅ |
-| q1_best_k | 2 | run_summary.json | ✅ |
-| q1_silhouette | 0.4632 | run_summary.json | ✅ |
-| q1_pearson_invalid | false | q1_comparison.json | ✅ |
-| q2_m1_daily_profit | 2,918.2 | run_summary.json | ✅ |
-| q2_m1_weekly_profit_estimate | 20,427.4 | run_summary.json | ✅ |
-| q2_markup_std | 0.082 | run_summary.json | ✅ |
-| q2_markup_range | [1.0361, 1.2821] | run_summary.json | ✅ |
-| q2_k_sensitivity_range | [2,362, 3,713] | robustness summary | ✅ |
-| q3_m1_daily_profit | 1,326.9 | run_summary.json | ✅ |
-| q3_selected_skus | 31 | run_summary.json | ✅ |
-| q3_min_demand_satisfaction | 0.7858 | run_summary.json | ✅ |
-| q3_markup_std | 0.3108 | run_summary.json | ✅ |
+| q1_spearman_range | [−0.1937, 0.6253] | ✅ section 04 | ✅ |
+| q1_best_k | 2 | ✅ | ✅ |
+| q1_silhouette | 0.4632 | ✅ | ✅ |
+| q2_m1_daily_profit | 2,918.2 | ✅ section 05 | ✅ |
+| q2_m1_weekly_profit_estimate | 20,427.4 | ✅ | ✅ |
+| q2_markup_range | [1.0361, 1.2821] | ✅ | ✅ |
+| q2_k_sensitivity_range | [2,362, 3,713] | ✅ | ✅ |
+| q3_m1_daily_profit | 1,326.9 | ✅ section 06 | ✅ |
+| q3_selected_skus | 31 | ✅ | ✅ |
+| q3_min_demand_satisfaction | 0.7858 | ✅ | ✅ |
 
-**Result**: 13/13 claims verified. ✅
+**Result**: 10/10 paper claims verified against frozen_numbers.json. ✅
 
-## Check 2: Referenced files and figures exist
+## Check 2: Figure references
 
-All 21 referenced files in solution_package and method explanations verified on disk. 0 missing. ✅
+| Paper Ref | File | Exists |
+|---|---|---|
+| fig1_spearman_corr.png | paper/figures/fig1_spearman_corr.png | ✅ |
+| fig2_monthly_trend.png | paper/figures/fig2_monthly_trend.png | ✅ |
+| fig3_prophet_components.png | paper/figures/fig3_prophet_components.png | ✅ |
+| fig4_markup_comparison.png | paper/figures/fig4_markup_comparison.png | ✅ |
+| fig5_demand_satisfaction.png | paper/figures/fig5_demand_satisfaction.png | ✅ |
 
-## Check 3: Symbols match global symbol table
+**Result**: 5/5 figure references resolve. ✅
 
-Solution package uses consistent notation from `planning/symbol_table.md`:
-- $Q_{i,t}$, $P_{i,t}$, $\alpha_{i,t}$, $C_{i,t}$, $L_i$, $k$, $\pi$, $\rho$
-- Units: kg, yuan/kg, yuan, dimensionless
-- No conflicts detected. ✅
+## Check 3: Symbols match symbol_table.md
+
+Paper uses $S_{i,t}$, $P_{i,t}$, $\alpha_{i,t}$, $C_{i,t}$, $L_i$, $k$, $e_i$, $\pi$, $\rho$, $\gamma_i$, $d_{\min}$, $N$ — all consistent with `planning/symbol_table.md`. Notation $S_i(t)$ was corrected to $S_{i,t}$ during polish. ✅
 
 ## Check 4: Human decisions resolved
 
-| Decision ID | Status | Evidence |
-|---|---|---|
-| framing_profit_function | DECIDED | profit = revenue − cost − loss − discount |
-| framing_discount_policy | DECIDED | passive clearance, k=0.66 |
-| framing_q3_demand_satisfaction | DECIDED | penalty in objective |
-| framing_q2_space_constraint | DECIDED | no space constraint |
-| q1_method_choice | DECIDED | M1 Spearman+KMeans |
-| q2_method_choice | DECIDED | M1 Prophet+Newsvendor |
-| q3_method_choice | DECIDED | M1 Filter+Newsvendor |
-| assumption_A1-A4, Q2.1-Q2.3, H1-H6 | DECIDED | all resolved in model_assumptions.md |
-
-10/10 decisions resolved. ✅
+10 decisions in `planning/framing_decisions.jsonl`. Methods, profit function, discount policy, demand satisfaction, space constraint — all referenced in paper. ✅
 
 ## Check 5: Freeze not stale
 
-All frozen values trace to `results/*/experiments/round1/` outputs generated 2026-08-05 — same date as freeze. No newer experimental results exist. ✅
+Frozen 2026-08-05. No newer experimental results. code re-run at 300dpi on same date — outputs identical. ✅
 
 ## Check 6: Method roles match approved plan
 
-| Q | Approved | Code | Match |
-|---|---|---|---|
-| Q1 | M1=Spearman+KMeans, M2=Pearson(diagnostic) | q1_main.py + q1_baseline.py | ✅ |
-| Q2 | M1=Prophet+Newsvendor, M2=ARIMA+Fixed | q2_main.py + q2_baseline.py | ✅ |
-| Q3 | M1=Filter+Newsvendor, M2=Same+Fixed | q3_main.py + q3_baseline.py | ✅ |
-| Fallback M3 (Q2, Q3) | Not activated | Not implemented | ✅ |
+Paper describes M1 for Q1-Q3 as main methods, M2 as baselines. No fallback methods mentioned (correct — not triggered). ✅
 
 ---
 
 ## Verdict: PASSED
 
-0 divergences found. All frozen claims verified. All references exist. All decisions logged.
+0 divergences. All 10 frozen claims in paper. All 5 figures present. Notation consistent. Decisions traced.
