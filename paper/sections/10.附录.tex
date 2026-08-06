@@ -25,30 +25,10 @@
     code/Q3/q3\_baseline.py & Q3对比程序：固定加成策略 \\
     code/scripts/clean\_data.py & 数据清洗脚本 \\
     code/scripts/robustness\_checks.py & 稳健性检查脚本 \\
-    results/QX/reports/frozen\_numbers.json & 冻结数值快照 \\
     \bottomrule
   \end{tabularx}
 \end{table}
 
-\subsection*{附件B：Q3单品级策略详表（部分）}
+\subsection*{附件B：Q3单品级策略}
 
-受篇幅限制，31个单品的完整最优策略见支撑材料中的 \texttt{q3\_m1\_sku\_policy.csv} 文件。表\ref{tab:q3sample}展示各品类代表单品的结果。
-
-\begin{table}[H]
-  \centering
-  \caption{Q3部分单品最优策略}
-  \label{tab:q3sample}
-  \renewcommand{\arraystretch}{1.1}
-  \begin{tabularx}{\textwidth}{CCCC}
-    \toprule
-    品类 & 入选数 & 品类最优订货量（kg） & 品类利润贡献（元） \\
-    \midrule
-    水生根茎类 & 3 & 17.1 & 79 \\
-    花叶类 & 12 & 142.7 & 322 \\
-    花菜类 & 2 & 28.2 & 131 \\
-    茄类 & 3 & 39.2 & 146 \\
-    辣椒类 & 6 & 132.0 & 342 \\
-    食用菌 & 5 & 77.1 & 161 \\
-    \bottomrule
-  \end{tabularx}
-\end{table}
+正文表\ref{tab:q3summary}已按品类汇总Q3的最优补货与定价结果。全部31个单品的最优加成率、售价、订货量和期望利润详见支撑材料中的 \texttt{q3\_m1\_sku\_policy.csv} 文件。

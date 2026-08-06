@@ -4,6 +4,9 @@
 \documentclass[withoutpreface,bwprint]{cumcmthesis}
 \usepackage{etoolbox}
 \usepackage{ctex}
+\setCJKmainfont{SimSun}[BoldFont=SimHei, ItalicFont=KaiTi]
+\setCJKsansfont{SimHei}
+\setCJKmonofont{FangSong}
 \BeforeBeginEnvironment{tabular}{\zihao{-5}}
 % 参考文献改用纯tex格式，不再需要natbib+bibtex
 \usepackage[framemethod=TikZ]{mdframed}
@@ -37,10 +40,6 @@
 
 \input{sections/0.摘要.tex}
 \thispagestyle{empty}
-
-\tableofcontents
-\thispagestyle{empty}
-\newpage
 
 \setcounter{page}{1}
 
