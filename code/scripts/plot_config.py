@@ -9,7 +9,7 @@ def setup_style():
         "font.family": "sans-serif",
         "axes.unicode_minus": False,
         "font.size": 13,
-        "axes.titlesize": 15,
+        "axes.titlesize": 0,
         "axes.labelsize": 13,
         "xtick.labelsize": 11,
         "ytick.labelsize": 11,

@@ -90,7 +90,6 @@ for cat in CATS:
         comp = m.predict(pd.DataFrame({"ds": train["销售日期"]}))
         fig = m.plot_components(comp, figsize=(10, 8))
         for ax in fig.axes:
-            ax.set_title(ax.get_title(), fontsize=13, fontweight="bold")
             ax.tick_params(labelsize=10)
         fig.savefig(f"{OUT}/figures/q2_prophet_components_花叶类.png")
         plt.close()
@@ -115,7 +114,6 @@ w = 0.35
 ax.bar(x - w/2, df["历史加成率"].values * 100, w, label="历史均值加成率", color="#6baed6")
 ax.bar(x + w/2, df["优化加成率"].values * 100, w, label="优化加成率", color="#3182bd")
 ax.set_xticks(x); ax.set_xticklabels(CATS, rotation=30, ha="right")
-ax.set_ylabel("加成率 (%)"); ax.set_title("各品类历史 vs 优化加成率对比", fontweight="bold")
 ax.legend(); fig.tight_layout()
 fig.savefig(f"{OUT}/figures/q2_markup_comparison.png"); plt.close()
 
@@ -125,7 +123,6 @@ profit_data = [df["优化利润_元"].values]
 # We'll add M2 values after baseline runs
 ax.bar(x, profit_data[0], color="#3182bd", label="M1 报童优化")
 ax.set_xticks(x); ax.set_xticklabels(CATS, rotation=30, ha="right")
-ax.set_ylabel("单日期望利润 (元)"); ax.set_title("各品类 M1 报童优化单日利润", fontweight="bold")
 fig.tight_layout()
 fig.savefig(f"{OUT}/figures/q2_profit_bar.png"); plt.close()
 

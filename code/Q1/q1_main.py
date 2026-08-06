@@ -31,7 +31,6 @@ corr_vals = spearman_corr.values[np.triu_indices_from(spearman_corr.values, k=1)
 fig, ax = plt.subplots(figsize=FIG_SQUARE)
 sns.heatmap(spearman_corr, annot=True, fmt=".3f", cmap="RdBu_r", center=0,
             vmin=-1, vmax=1, ax=ax, annot_kws={"fontsize": 11})
-ax.set_title("各品类日销售量 Spearman 秩相关系数矩阵", fontsize=15, fontweight="bold")
 fig.tight_layout(); fig.savefig(f"{OUT}/figures/q1_corr_heatmap_spearman.png"); plt.close()
 spearman_corr.to_csv(f"{OUT}/tables/q1_spearman_corr.csv")
 
@@ -73,7 +72,6 @@ t_elapsed = time.time() - t0
 fig, ax = plt.subplots(figsize=FIG_HALF)
 ax.plot(range(2, 8), sil_scores, "bo-", markersize=8, linewidth=2)
 ax.set_xlabel("聚类数 K"); ax.set_ylabel("轮廓系数 (Silhouette Score)")
-ax.set_title(f"K-means++ 轮廓系数 (最优 K={best_k})", fontweight="bold")
 ax.axvline(x=best_k, color="red", linestyle="--", alpha=0.5, label=f"K={best_k}")
 ax.legend(); fig.tight_layout()
 fig.savefig(f"{OUT}/figures/q1_cluster_silhouette.png"); plt.close()
@@ -116,7 +114,6 @@ tick_labels = [monthly["month_str"].iloc[i] for i in tick_positions]
 ax.set_xticks(tick_positions)
 ax.set_xticklabels(tick_labels, rotation=45, ha="right")
 ax.legend(bbox_to_anchor=(1.02, 1), loc="upper left", title="品类")
-ax.set_title("各品类月销售量时间序列 (2020.07–2023.06)", fontweight="bold")
 ax.set_ylabel("月销售总量 (kg)"); ax.set_xlabel("月份")
 fig.tight_layout(); fig.savefig(f"{OUT}/figures/q1_monthly_sales_trend.png"); plt.close()
 

@@ -121,7 +121,6 @@ ax.barh(range(len(df_sorted)), df_sorted["优化利润_元"].values, color=bar_c
 ax.set_yticks(range(len(df_sorted)))
 ax.set_yticklabels([f"{r['单品编码']}" for _, r in df_sorted.iterrows()], fontsize=7)
 ax.set_xlabel("单日期望利润 (元)")
-ax.set_title("Q3 各单品报童优化单日利润", fontweight="bold")
 from matplotlib.patches import Patch
 legend_elements = [Patch(facecolor=cat_color[c], label=c) for c in cat_demand.index]
 ax.legend(handles=legend_elements, title="品类", fontsize=8, title_fontsize=9)
@@ -133,7 +132,6 @@ cats_list = list(cat_demand.index)
 sat_vals = [satisfaction[c] * 100 for c in cats_list]
 ax.bar(cats_list, sat_vals, color="#3182bd")
 ax.axhline(y=100, color="red", linestyle="--", alpha=0.5)
-ax.set_ylabel("需求满足率 (%)"); ax.set_title("各品类需求满足率", fontweight="bold")
 ax.tick_params(axis="x", rotation=30)
 for i, v in enumerate(sat_vals):
     ax.text(i, v + 1, f"{v:.1f}%", ha="center", fontsize=10)
@@ -144,7 +142,6 @@ fig, ax = plt.subplots(figsize=FIG_HALF)
 ax.hist(df["优化加成率"].values * 100, bins=15, color="#3182bd", edgecolor="white", alpha=0.85)
 ax.axvline(x=df["优化加成率"].mean() * 100, color="red", linestyle="--", label=f"均值={df['优化加成率'].mean():.1%}")
 ax.set_xlabel("加成率 (%)"); ax.set_ylabel("单品数量")
-ax.set_title("单品优化加成率分布", fontweight="bold")
 ax.legend()
 fig.tight_layout(); fig.savefig(f"{OUT}/figures/q3_markup_distribution.png"); plt.close()
 
