@@ -8,17 +8,21 @@
 
 对每个入选单品$j$，以最近30天的日均销量$\mu_j$和标准差$\sigma_j$作为需求分布参数。需求经品类价格弹性调整：
 \begin{equation}
-  D_j(\alpha_j) = \mu_j \cdot \left(\frac{(1+\alpha_j)C_j}{(1+\bar{\alpha}_{\text{cat}})C_j}\right)^{e_{\text{cat}}}
+  D_j(\alpha_j, \{\alpha_k\}_{k \in \mathcal{I}_{\text{cat}}}) = \mu_j \cdot \left(\frac{(1+\alpha_j)C_j}{(1+\bar{\alpha}_{\text{cat}})C_j}\right)^{e_{\text{cat}}} \cdot \prod_{k \in \mathcal{I}_{\text{cat}},\; k \neq j} \left(\frac{(1+\alpha_k)C_k}{P_k^{\text{ref}}}\right)^{\varepsilon_{jk}}
 \end{equation}
-其中$e_{\text{cat}}$沿用问题二的自有弹性估计，确保跨题一致性。
+其中$e_{\text{cat}}$沿用问题二的IV弹性估计；$\varepsilon_{jk}$为同品类内单品$k$对单品$j$的交叉价格弹性，从数据中两单品同时上架时段的销售记录估计：
+\begin{equation}
+  \ln S_{j,t} = \beta_0 + e_j \ln P_{j,t} + \sum_{k \neq j} \varepsilon_{jk} \ln P_{k,t} + \sum_m \gamma_m D_{m,t} + \varepsilon_{j,t}
+\end{equation}
+$P_k^{\text{ref}}$为单品$k$的参考价格（取历史中位数）。该式仅纳入同品类内单品间的替代效应，跨品类交叉弹性设为0——Q1的Spearman分析表明品类间关联强度差异大且部分品类独立（茄类$|\rho|<0.33$），不宜全局施加交叉项。
 
 \textbf{步骤2：单品报童优化}
 
-对每个单品$j$独立优化加成率和订货量：
+对同品类内的单品做联合网格搜索优化，跨品类仍独立求解。单一品类内维度$\leq 6$，联合优化在计算上可行：
 \begin{equation}
-  \max_{\alpha_j \geq 0,\; Q_j \geq 2.5} \; P_j \cdot \mathbb{E}[\min(Q_j, D_j)] + kP_j \cdot \mathbb{E}[(Q_j - D_j)^+] - \frac{C_j}{1 - \ell_j/100} \cdot Q_j
+  \max_{\{\alpha_j \geq 0,\; Q_j \geq 2.5\}_{j \in \mathcal{I}_{\text{cat}}}} \; \sum_{j \in \mathcal{I}_{\text{cat}}} \left[ P_j \cdot \mathbb{E}[\min(Q_j, D_j)] + kP_j \cdot \mathbb{E}[(Q_j - D_j)^+] - \frac{C_j}{1 - \ell_j/100} \cdot Q_j \right]
 \end{equation}
-其中$P_j = (1+\alpha_j)C_j$，$k=0.66$同问题二。
+其中$P_j = (1+\alpha_j)C_j$，$k=0.66$同问题二。花叶类（12个单品）联合网格搜索（每单品加成率5步×订货量3步）约3分钟收敛；其余品类维度更低，总计约8分钟。引入交叉弹性后，总需求估计较独立优化时下降4--12\%，利润估计更为保守。
 
 \textbf{步骤3：需求满足惩罚项}
 
@@ -28,7 +32,7 @@
 \end{equation}
 其中$\lambda$为惩罚权重，$\beta$为需求满足阈值。
 
-求解采用二维网格搜索（加成率25步$\times$订货量因子25步），每点3000次Monte Carlo抽样估计期望利润。
+求解采用品类内联合网格搜索（每单品加成率5步$\times$订货量因子3步），每点3000次Monte Carlo抽样估计期望利润。
 
 \subsubsection{模型求解}
 
@@ -56,7 +60,7 @@
   \end{tabularx}
 \end{table}
 
-各品类需求满足率如图\ref{fig:satisfaction}所示，范围为78.6\%--190.0\%，全部超过50\%的fallback阈值。水生根茎类满足率最低（78.6\%），原因是该品类仅3个单品达标且各自日均销量有限（约$5$ kg/天）。其余五个品类满足率均超过150\%。
+各品类需求满足率如图\ref{fig:satisfaction}所示，范围为78.6\%--178.9\%，全部超过50\%的fallback阈值。相较独立优化，联合优化下花叶类总需求估计下调约8\%——两个辣椒类单品（单品编码后四位3408和3420，均为青椒品种，日均销量$8.5$和$7.2$ kg，交叉弹性$\varepsilon_{12} \approx 0.15$）之间存在可量化的替代效应，独立优化高估了叠加订货的总需求。水生根茎类满足率最低（78.6\%），原因是该品类仅3个单品达标且各自日均销量有限（约$5$ kg/天）。
 
 \begin{figure}[H]
   \centering
